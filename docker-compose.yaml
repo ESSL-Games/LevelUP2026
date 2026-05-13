@@ -1,0 +1,10 @@
+services:
+  redis:
+    image: redis:8.6.3
+    container_name: redis
+    ports:
+      - '127.0.0.1:3030:6379'
+    volumes:
+      - ./files/redis:/data
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes"]
+    restart: unless-stopped
