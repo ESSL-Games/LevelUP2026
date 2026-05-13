@@ -5,8 +5,8 @@ export const socket: io.Socket = io.connect(":3000", {
 	reconnection: true,
 });
 
-socket.once("logon_success", () => {
-	console.log("Logged on successfully to Server");
+socket.on("logon_success", (msg) => {
+	console.log(JSON.parse(msg).msg);
 });
 
 socket.io.on("reconnect_attempt", (attempt: number) => {

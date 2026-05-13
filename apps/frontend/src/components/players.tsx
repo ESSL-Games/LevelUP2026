@@ -116,6 +116,16 @@ export function Players({ authKey }: PlayersProps) {
 														: player.riotId}
 											</DropdownMenuLabel>
 											<DropdownMenuSeparator />
+											<a
+												target="_blank"
+												href={`https://vtl.lol/id/${player.riotId}`}
+												rel="noopener"
+											>
+												<DropdownMenuItem className="hover:cursor-pointer">
+													VTL
+												</DropdownMenuItem>
+											</a>
+											<DropdownMenuSeparator />
 											<AlertDialog>
 												<AlertDialogTrigger asChild>
 													<DropdownMenuItem

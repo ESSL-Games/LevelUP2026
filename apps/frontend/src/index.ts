@@ -9,7 +9,6 @@ const server = serve({
 
 	development: process.env.NODE_ENV !== "production" && {
 		hmr: true,
-		console: true,
 	},
 });
 

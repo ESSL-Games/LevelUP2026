@@ -1,4 +1,4 @@
-# bun-react-template
+# ESSL x LevelUP x Spectra
 
 To install dependencies:
 
@@ -6,9 +6,12 @@ To install dependencies:
 bun install
 ```
 
+Configure the Environment Variables in .env, example is located at .env.example
+
 To start a development server:
 
 ```bash
+docker compose up -d
 bun dev
 ```
 
@@ -17,5 +20,3 @@ To run for production:
 ```bash
 bun start
 ```
-
-This project was created using `bun init` in bun v1.3.13. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.

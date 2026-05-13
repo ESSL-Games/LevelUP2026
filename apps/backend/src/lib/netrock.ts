@@ -130,7 +130,14 @@ function calculateRoundCeremony(data: IMatchData): IRoundCeremony {
 
 	if (data.roundPhase !== "end") return defaultRoundCeremony;
 
-	const teamWon = data.attackersWon && data.teams[0]?.isAttacking ? 0 : 1;
+	const teamWon = data.attackersWon
+		? data.teams[0]?.isAttacking
+			? 0
+			: 1
+		: data.teams[0]?.isAttacking
+			? 1
+			: 0;
+
 	const wonTeam = data.teams[teamWon];
 	const lostTeam = data.teams[teamWon === 0 ? 1 : 0];
 
