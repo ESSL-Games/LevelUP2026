@@ -33,6 +33,7 @@ export class Spectra {
 		this.matchSocket.io.on("reconnect", () => {
 			this.matchSocket.emit("logon", JSON.stringify({ groupCode: groupCode }));
 			console.log("Reconnected to server");
+			clearData();
 		});
 
 		this.matchSocket.emit("logon", JSON.stringify({ groupCode: groupCode }));
