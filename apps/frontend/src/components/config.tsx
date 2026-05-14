@@ -9,14 +9,14 @@ export interface IConfig {
 	netrockUrl: string;
 	netrockStreamUrlPrefix: string;
 	netrockStreamUrlSuffix: string;
-	inGameStatusOverride: true | false | "";
+	inMatchStatusOverride: true | false | "";
 }
 
 const initialConfig: IConfig = {
 	netrockUrl: "",
 	netrockStreamUrlPrefix: "",
 	netrockStreamUrlSuffix: "",
-	inGameStatusOverride: "",
+	inMatchStatusOverride: "",
 };
 
 interface ConfigProps {
@@ -92,16 +92,16 @@ export function Config({ authKey }: ConfigProps) {
 					/>
 				</div>
 				<div className="grid gap-2">
-					<Label>inGame Override</Label>
+					<Label>inMatch Override</Label>
 					<ButtonGroup>
 						<Button
 							variant={
-								config.inGameStatusOverride === true ? "secondary" : "outline"
+								config.inMatchStatusOverride === true ? "secondary" : "outline"
 							}
 							onClick={() =>
 								setConfig((prev) => ({
 									...prev,
-									inGameStatusOverride: true,
+									inMatchStatusOverride: true,
 								}))
 							}
 						>
@@ -109,12 +109,12 @@ export function Config({ authKey }: ConfigProps) {
 						</Button>
 						<Button
 							variant={
-								config.inGameStatusOverride === "" ? "secondary" : "outline"
+								config.inMatchStatusOverride === "" ? "secondary" : "outline"
 							}
 							onClick={() =>
 								setConfig((prev) => ({
 									...prev,
-									inGameStatusOverride: "",
+									inMatchStatusOverride: "",
 								}))
 							}
 						>
@@ -122,12 +122,12 @@ export function Config({ authKey }: ConfigProps) {
 						</Button>
 						<Button
 							variant={
-								config.inGameStatusOverride === false ? "secondary" : "outline"
+								config.inMatchStatusOverride === false ? "secondary" : "outline"
 							}
 							onClick={() =>
 								setConfig((prev) => ({
 									...prev,
-									inGameStatusOverride: false,
+									inMatchStatusOverride: false,
 								}))
 							}
 						>

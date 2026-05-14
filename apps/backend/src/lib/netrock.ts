@@ -14,8 +14,8 @@ const initialConfig = await redis.getConfig();
 
 export const initialNetRock: INetRockData = {
 	inMatch:
-		initialConfig.inGameStatusOverride !== ""
-			? initialConfig.inGameStatusOverride
+		initialConfig.inMatchStatusOverride !== ""
+			? initialConfig.inMatchStatusOverride
 			: false,
 	roundWin: {
 		wonTeam: false,
@@ -53,7 +53,9 @@ export async function updateDbData() {
 	} else {
 		const config = await redis.getConfig();
 		netRock.inMatch =
-			config.inGameStatusOverride !== "" ? config.inGameStatusOverride : false;
+			config.inMatchStatusOverride !== ""
+				? config.inMatchStatusOverride
+				: false;
 		sendNetRockUpdate();
 	}
 }
@@ -94,9 +96,9 @@ export async function updateData(data: IMatchData) {
 
 	const newNetRock: INetRockData = {
 		inMatch:
-			config.inGameStatusOverride === ""
+			config.inMatchStatusOverride === ""
 				? data.roundPhase !== "LOBBY" && data.roundPhase !== "game_end"
-				: config.inGameStatusOverride,
+				: config.inMatchStatusOverride,
 		roundWin: {
 			wonTeam:
 				data.roundPhase === "end"

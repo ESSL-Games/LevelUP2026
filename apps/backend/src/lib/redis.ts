@@ -73,5 +73,5 @@ const defaultConfig: IConfig = {
 	netrockUrl: "",
 	netrockStreamUrlPrefix: "",
 	netrockStreamUrlSuffix: "",
-	inGameStatusOverride: "",
+	inMatchStatusOverride: "",
 };
