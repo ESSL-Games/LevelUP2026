@@ -8,6 +8,11 @@ import {
 } from "./socket.ts";
 
 const redisClient = new RedisClient();
+
+redisClient.onconnect = () => {
+	console.log("Connected to Redis server");
+};
+
 process.on("beforeExit", (_code) => {
 	redisClient.close();
 });
