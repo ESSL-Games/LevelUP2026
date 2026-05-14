@@ -51,7 +51,7 @@ export function runServer() {
 					);
 				}
 
-				return new Response(Bun.file(`teams/${teamId}.png`), {
+				return new Response(Bun.file(`src/data/teams/${teamId}.png`), {
 					headers: corsHeaders,
 				});
 			},
