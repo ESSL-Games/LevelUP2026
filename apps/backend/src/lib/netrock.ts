@@ -37,7 +37,6 @@ let lastMatchData: IMatchData;
 let clutchWasnScheis: number[] = [-1, -1];
 
 export async function clearData() {
-	console.log("clear");
 	await redis.storeNetrock(initialNetRock);
 	netRock = initialNetRock;
 }
