@@ -1,3 +1,4 @@
+import { images } from "./data/images.ts";
 import { teams } from "./data/teams.ts";
 import { socketHandler } from "./lib/socket.ts";
 
@@ -51,7 +52,22 @@ export function runServer() {
 					);
 				}
 
-				return new Response(Bun.file(`src/data/teams/${teamId}.png`), {
+				return new Response(Bun.file(`src/data/teams/${team.teamId}.png`), {
+					headers: corsHeaders,
+				});
+			},
+
+			"/images/:id": async (req) => {
+				const imageId = req.params.id;
+				const image = images.find((entry) => entry.imageId === imageId);
+
+				if (!image) {
+					return Response.json(
+						{ error: "Team not found" },
+						{ status: 404, headers: corsHeaders },
+					);
+				}
+				return new Response(Bun.file(`src/data/images/${image.imageId}.png`), {
 					headers: corsHeaders,
 				});
 			},
