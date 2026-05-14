@@ -8,3 +8,10 @@ services:
       - ./files/redis:/data
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes"]
     restart: unless-stopped
+
+  spectra-frontend:
+    image: local-spectra:latest
+    ports:
+      - "3200:80"
+    volumes:
+      - ./files/spectra-frontend/config:/usr/share/nginx/html/assets/config/
