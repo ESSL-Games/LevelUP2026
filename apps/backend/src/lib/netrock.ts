@@ -10,8 +10,13 @@ import { redis } from "./redis.ts";
 
 const netrockAuthorization = process.env.NETROCK_AUTH || "";
 
-const initialNetRock: INetRockData = {
-	inMatch: false,
+const initialConfig = await redis.getConfig();
+
+export const initialNetRock: INetRockData = {
+	inMatch:
+		initialConfig.inGameStatusOverride !== ""
+			? initialConfig.inGameStatusOverride
+			: false,
 	roundWin: {
 		wonTeam: false,
 		roundCeremony: {
@@ -32,18 +37,24 @@ const initialNetRock: INetRockData = {
 
 let netRock: INetRockData = initialNetRock;
 
-let lastMatchData: IMatchData;
+let lastMatchData: IMatchData | undefined;
 
 let clutchWasnScheis: number[] = [-1, -1];
 
 export async function clearData() {
 	await redis.storeNetrock(initialNetRock);
 	netRock = initialNetRock;
+	lastMatchData = undefined;
 }
 
-export async function updateNames() {
+export async function updateDbData() {
 	if (lastMatchData !== undefined) {
 		await updateData(lastMatchData);
+	} else {
+		const config = await redis.getConfig();
+		netRock.inMatch =
+			config.inGameStatusOverride !== "" ? config.inGameStatusOverride : false;
+		sendNetRockUpdate();
 	}
 }
 
@@ -79,9 +90,13 @@ export async function updateData(data: IMatchData) {
 			});
 		}
 	}
+	const config = await redis.getConfig();
 
 	const newNetRock: INetRockData = {
-		inMatch: data.roundPhase !== "LOBBY" && data.roundPhase !== "game_end",
+		inMatch:
+			config.inGameStatusOverride === ""
+				? data.roundPhase !== "LOBBY" && data.roundPhase !== "game_end"
+				: config.inGameStatusOverride,
 		roundWin: {
 			wonTeam:
 				data.roundPhase === "end"
@@ -113,7 +128,7 @@ export async function updateData(data: IMatchData) {
 	};
 	if (newNetRock !== netRock) {
 		netRock = newNetRock;
-		sendToNetRock();
+		sendNetRockUpdate();
 	}
 	lastMatchData = data;
 }
@@ -236,7 +251,7 @@ async function getName(player: IPlayerData): Promise<string> {
 	return player.name;
 }
 
-async function sendToNetRock() {
+async function sendNetRockUpdate() {
 	const config = await redis.getConfig();
 	Bun.fetch(config?.netrockUrl ?? "", {
 		method: "POST",

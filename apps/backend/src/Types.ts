@@ -32,6 +32,7 @@ export interface IConfig {
 	netrockUrl: string;
 	netrockStreamUrlPrefix: string;
 	netrockStreamUrlSuffix: string;
+	inGameStatusOverride: true | false | "";
 }
 
 export interface IRoundCeremony {
