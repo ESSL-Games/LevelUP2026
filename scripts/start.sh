@@ -1,1 +1,3 @@
-cd /Users/paul/Developer/essl/spectra-levelup && bun run start
+cd ..
+docker compose up -d
+bun run start
