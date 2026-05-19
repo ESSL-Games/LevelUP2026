@@ -2,6 +2,7 @@ import type {
 	IMatchData,
 	INetRocKDataPlayer,
 	INetRockData,
+	INetRockDataTeam,
 	IPlayer,
 	IPlayerData,
 	IRoundCeremony,
@@ -92,6 +93,26 @@ export async function updateData(data: IMatchData) {
 			});
 		}
 	}
+
+	const teams: INetRockDataTeam[] = [];
+
+	for (const [teamIndex, team] of data.teams.entries()) {
+		let teamWonMatch = false;
+		if (team.roundsWon >= 13) {
+			if (team.roundsWon - (data.teams[teamIndex - 1]?.roundsWon || 0) >= 2) {
+				teamWonMatch = true;
+			}
+		}
+		teams.push({
+			name: team.teamName,
+			tricode: team.teamTricode,
+			logoUrl: team.teamUrl,
+			isAttacker: team.isAttacking,
+			roundsWon: team.roundsWon,
+			teamWonMatch: teamWonMatch,
+		});
+	}
+
 	const config = await redis.getConfig();
 
 	const newNetRock: INetRockData = {
@@ -120,12 +141,7 @@ export async function updateData(data: IMatchData) {
 					? "right"
 					: false,
 		},
-		teams: data.teams.map((team) => ({
-			name: team.teamName,
-			tricode: team.teamTricode,
-			logoUrl: team.teamUrl,
-			isAttacker: team.isAttacking,
-		})),
+		teams,
 		players,
 	};
 	if (newNetRock !== netRock) {

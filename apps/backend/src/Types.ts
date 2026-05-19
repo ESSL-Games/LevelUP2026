@@ -8,12 +8,7 @@ export interface INetRockData {
 		techTimeout: boolean;
 		teamTimeout: "left" | "right" | false;
 	};
-	teams: {
-		name: string;
-		tricode: string;
-		logoUrl: string;
-		isAttacker: boolean;
-	}[];
+	teams: INetRockDataTeam[];
 	players: INetRocKDataPlayer[];
 }
 
@@ -26,6 +21,15 @@ export interface INetRocKDataPlayer {
 	assists: number;
 	isAlive: boolean;
 	killsThisRound: number;
+}
+
+export interface INetRockDataTeam {
+	name: string;
+	tricode: string;
+	logoUrl: string;
+	isAttacker: boolean;
+	roundsWon: number;
+	teamWonMatch: boolean;
 }
 
 export interface IConfig {
