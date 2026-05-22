@@ -52,6 +52,7 @@ export interface IPlayer {
 	riotId: string;
 	name: string;
 	fullname: string;
+	playercamUrl: string;
 }
 
 export interface ITeam {

@@ -37,6 +37,7 @@ export interface IPlayer {
 	riotId: string;
 	name: string;
 	fullname: string;
+	playercamUrl: string;
 }
 
 type IEditablePlayer = IPlayer & { originalKey: string };
@@ -47,6 +48,7 @@ const emptyPlayer: IEditablePlayer = {
 	name: "",
 	fullname: "",
 	originalKey: "",
+	playercamUrl: "",
 };
 
 const initialPlayers: IPlayer[] = [];
@@ -227,6 +229,24 @@ export function Players({ authKey }: PlayersProps) {
 																		required
 																	/>
 																</div>
+																<div className="grid gap-2">
+																	<Label>Playercam URL</Label>
+																	<Input
+																		placeholder="http://172.30.7.0:8889/facecam"
+																		value={editing?.playercamUrl ?? ""}
+																		onChange={(e) =>
+																			setEditing((prev) =>
+																				prev
+																					? {
+																							...prev,
+																							playercamUrl: e.target.value,
+																						}
+																					: prev,
+																			)
+																		}
+																		required
+																	/>
+																</div>
 															</div>
 														</AlertDialogDescription>
 													</AlertDialogHeader>
@@ -387,6 +407,24 @@ export function Players({ authKey }: PlayersProps) {
 										onChange={(e) =>
 											setCreating((prev) =>
 												prev ? { ...prev, riotId: e.target.value } : prev,
+											)
+										}
+										required
+									/>
+								</div>
+								<div className="grid gap-2">
+									<Label>Playercam URL</Label>
+									<Input
+										placeholder="http://172.30.7.0:8889/facecam"
+										value={creating?.playercamUrl ?? ""}
+										onChange={(e) =>
+											setCreating((prev) =>
+												prev
+													? {
+															...prev,
+															playercamUrl: e.target.value,
+														}
+													: prev,
 											)
 										}
 										required

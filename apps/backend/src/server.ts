@@ -63,7 +63,7 @@ export function runServer() {
 
 				if (!image) {
 					return Response.json(
-						{ error: "Team not found" },
+						{ error: "Image not found" },
 						{ status: 404, headers: corsHeaders },
 					);
 				}
