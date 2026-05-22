@@ -1,5 +1,6 @@
 import { images } from "./data/images.ts";
 import { teams } from "./data/teams.ts";
+import { redis } from "./lib/redis.ts";
 import { socketHandler } from "./lib/socket.ts";
 
 const corsHeaders = {
@@ -70,6 +71,11 @@ export function runServer() {
 				return new Response(Bun.file(`src/data/images/${image.imageId}.png`), {
 					headers: corsHeaders,
 				});
+			},
+
+			"/netrock": async (_req) => {
+				const netrock = await redis.getNetrock();
+				return Response.json(netrock);
 			},
 
 			"/test": async (req) => {

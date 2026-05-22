@@ -9,8 +9,6 @@ import type {
 } from "../Types.ts";
 import { redis } from "./redis.ts";
 
-const netrockAuthorization = process.env.NETROCK_AUTH || "";
-
 const initialConfig = await redis.getConfig();
 
 export const initialNetRock: INetRockData = {
@@ -271,12 +269,5 @@ async function getName(player: IPlayerData): Promise<string> {
 
 async function sendNetRockUpdate() {
 	const config = await redis.getConfig();
-	Bun.fetch(config?.netrockUrl ?? "", {
-		method: "POST",
-		headers: {
-			Authorization: netrockAuthorization,
-		},
-		body: JSON.stringify(netRock),
-	});
 	redis.storeNetrock(netRock);
 }
