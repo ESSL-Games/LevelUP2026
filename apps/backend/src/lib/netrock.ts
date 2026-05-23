@@ -91,6 +91,7 @@ export async function updateData(data: IMatchData) {
 			});
 		}
 	}
+	players.sort((a, b) => a.id - b.id);
 
 	const teams: INetRockDataTeam[] = [];
 
@@ -268,6 +269,5 @@ async function getName(player: IPlayerData): Promise<string> {
 }
 
 async function sendNetRockUpdate() {
-	const config = await redis.getConfig();
 	redis.storeNetrock(netRock);
 }
